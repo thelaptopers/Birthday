@@ -2,78 +2,83 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday 🎂</title>
+<title>Birthday Surprise</title>
 
 <style>
 
 body{
 margin:0;
+background:#0f0f0f;
 font-family:Arial;
-background:linear-gradient(135deg,#ff6a88,#ff99ac);
 color:white;
 text-align:center;
 overflow:hidden;
 }
 
-.container{
-padding:20px;
-}
-
-h1{
-font-size:32px;
-margin-top:30px;
-animation: glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{ text-shadow:0 0 10px white;}
-to{ text-shadow:0 0 25px yellow;}
-}
-
-.slideshow{
-width:90%;
-max-width:320px;
-margin:auto;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
-}
-
-.slideshow img{
-width:100%;
-display:none;
-}
-
-button{
-margin-top:20px;
-padding:12px 25px;
-border:none;
-border-radius:12px;
-font-size:16px;
-background:white;
-color:#ff4b7d;
+#start{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
 cursor:pointer;
 }
 
-#msg{
+#content{
+display:none;
+padding-top:40px;
+}
+
+h1{
+font-size:40px;
+animation:fadeIn 2s ease-in-out;
+}
+
+img{
+width:220px;
+border-radius:12px;
+margin-top:15px;
+}
+
+#cake{
+font-size:80px;
 margin-top:20px;
-font-size:18px;
-padding:10px;
+cursor:pointer;
 }
 
-.confetti{
-position:fixed;
-width:10px;
-height:10px;
+#message{
+margin-top:20px;
+font-size:20px;
+width:80%;
+margin-left:auto;
+margin-right:auto;
+display:none;
+}
+
+iframe{
+margin-top:20px;
+display:none;
+}
+
+@keyframes fadeIn{
+0%{opacity:0; transform:translateY(-20px);}
+100%{opacity:1; transform:translateY(0);}
+}
+
+/* fireworks */
+
+.firework{
+position:absolute;
+width:6px;
+height:6px;
 background:white;
-top:-10px;
-animation:fall linear infinite;
+border-radius:50%;
+animation:explode 1s linear infinite;
 }
 
-@keyframes fall{
-to{
-transform:translateY(110vh);
-}
+@keyframes explode{
+0%{transform:scale(0);}
+100%{transform:scale(10); opacity:0;}
 }
 
 </style>
@@ -81,54 +86,56 @@ transform:translateY(110vh);
 
 <body>
 
-<div class="container">
-
-<h1>🎂 Happy Birthday Bestie 🎂</h1>
-
-<div class="slideshow">
-<img src="PHOTO1.jpg">
-<img src="PHOTO2.jpg">
-<img src="PHOTO3.jpg">
-<img src="PHOTO4.jpg">
+<div id="start" onclick="startSurprise()">
+Tap for Surprise 🎁
 </div>
 
-<button onclick="showMessage()">Open Surprise 🎁</button>
+<div id="content">
 
-<div id="msg"></div>
+<h1>Happy Birthday Riya</h1>
 
+<img src="https://i.ibb.co/8DS0GRCL/image.jpg">
+
+<div id="cake" onclick="cutCake()">🎂</div>
+
+<div id="message">
+Happy Birthday to the my Dearest Best friend. ....the only subscriber of a version of me that exists only for you...🙃
 </div>
 
-<audio autoplay loop>
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-</audio>
+<iframe id="song" width="260" height="150"
+src="https://www.youtube.com/embed/RbiJXZl2pN0?autoplay=1"
+allow="autoplay">
+</iframe>
+
+</div>
 
 <script>
 
-let index=0;
-let images=document.querySelectorAll(".slideshow img");
-
-function slideshow(){
-images.forEach(img=>img.style.display="none");
-index++;
-if(index>images.length){index=1;}
-images[index-1].style.display="block";
-setTimeout(slideshow,2000);
+function startSurprise(){
+document.getElementById("start").style.display="none";
+document.getElementById("content").style.display="block";
+startFireworks();
 }
 
-slideshow();
-
-function showMessage(){
-document.getElementById("msg").innerHTML =
-"💖 You are one of the most amazing people in my life. Thank you for all the memories and laughs. I hope your birthday is as awesome as you are! 🎉";
+function cutCake(){
+document.getElementById("cake").innerHTML="🍰";
+document.getElementById("message").style.display="block";
+document.getElementById("song").style.display="block";
 }
 
-for(let i=0;i<40;i++){
-let conf=document.createElement("div");
-conf.className="confetti";
-conf.style.left=Math.random()*100+"vw";
-conf.style.animationDuration=(Math.random()*3+2)+"s";
-conf.style.opacity=Math.random();
-document.body.appendChild(conf);
+function startFireworks(){
+setInterval(()=>{
+let fw=document.createElement("div");
+fw.className="firework";
+fw.style.left=Math.random()*100+"vw";
+fw.style.top=Math.random()*100+"vh";
+document.body.appendChild(fw);
+
+setTimeout(()=>{
+fw.remove();
+},1000);
+
+},200);
 }
 
 </script>
